@@ -1,14 +1,3 @@
-package com.victormagosso.ingleseingles.exercicios.writing;
-import androidx.appcompat.app.AppCompatActivity;
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
-import com.victormagosso.ingleseingles.R;
-
 public class EnviarTextoActivity extends AppCompatActivity {
     TextView titulo;
     EditText editText;
@@ -26,23 +15,18 @@ public class EnviarTextoActivity extends AppCompatActivity {
         sendMail = findViewById( R.id.sendMail );
         writingActivity = new WritingActivity();
 
-        //nao consegui fazer passar ainda
-        Bundle bundle = new Bundle(  );
-        final String tema = bundle.getString("tema");
-
-
         sendMail.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String [] TO_EMAIL = {"ingleseingles@gmail.com"};
+                String [] TO_EMAIL = {"seuemail@seuemail.com"}; //caso queira acrescentar mais destinatários, basta acrescentar ao array
                 Intent intent =  new Intent( Intent.ACTION_SEND);
                 intent.putExtra( Intent.EXTRA_EMAIL,TO_EMAIL);
-                intent.putExtra( Intent.EXTRA_SUBJECT, "App Exercise: " + tema );
+                intent.putExtra( Intent.EXTRA_SUBJECT, "App Exercise: " + titulo.getText().toString() );
                 intent.putExtra( Intent.EXTRA_TEXT, editText.getText().toString() );
                 intent.setType("message/rfc822");
                 try{
                     startActivity( Intent.createChooser( intent, "Enviar e-mail" ) );
-                    Toast.makeText( EnviarTextoActivity.this, "Please, choose an app to send you e-mail", Toast.LENGTH_SHORT ).show();
+                    Toast.makeText( EnviarTextoActivity.this, "Escolha um app para enviar o seu e-mail", Toast.LENGTH_SHORT ).show();
                 }catch (Exception e){
                     e.getMessage();
                     Toast.makeText( EnviarTextoActivity.this, "Erro ao enviar. Por favor, tente novamente!", Toast.LENGTH_SHORT ).show();
